@@ -1,0 +1,20 @@
+(*Define the function,range,and number of disks*)
+f[x_] := Sin[10 x]^6 + x  
+a = 1;
+b = 14;
+n = 20; (*Increase n for a finer approximation*)
+
+(*Generate the disks*)
+disks = Table[
+   With[{x = a + (i - 0.5)*((b - a)/n), 
+     r = f[a + (i - 0.5)*((b - a)/n)]}, {Cylinder[{{x, 0, 
+        0}, {x + (b - a)/n, 0, 0}}, r]}], {i, 1, n}];
+
+(*Combine the disks into one graphics object*)
+solid = Graphics3D[Flatten@disks, Axes -> True, Boxed -> True];
+
+(*Display the solid*)
+solid
+
+(*Export to STL*)
+Export["volumeOfRevolution.stl", solid];
